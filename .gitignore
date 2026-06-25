@@ -1,0 +1,31 @@
+# Local config (never commit your real settings)
+.env
+
+# Runtime scratch directory the bridge creates
+sandbox/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Editor / OS noise
+.DS_Store
+*.swp
+
+# Syncthing (this working tree lives inside a synced folder)
+.stfolder/
+.stversions/
+*sync-conflict*
+*Name clash*
+
+# Local handover note (synced via Syncthing, not for the repo)
+HANDOVER.md
+
+# Saved third-party reference docs (OpenClaw/Hermes), kept locally only
+docs/reference/
+
+# Background-run artifacts written by `python3 bridge.py start`
+cli-bridge.log
+.cli-bridge.pid

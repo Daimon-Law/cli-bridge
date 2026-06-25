@@ -1,0 +1,33 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#  systemd USER service template for cli-bridge (optional, keeps it running
+#  in the background and restarts it on reboot).
+#
+#  Setup (Linux):
+#    1. Edit the two paths marked CHANGE-ME below.
+#    2. mkdir -p ~/.config/systemd/user
+#    3. cp bridge.service ~/.config/systemd/user/cli-bridge.service
+#    4. systemctl --user daemon-reload
+#    5. systemctl --user enable --now cli-bridge.service
+#    6. systemctl --user status cli-bridge.service     # check it's running
+#    7. journalctl --user -u cli-bridge.service -f     # watch the logs
+#
+#  (To have user services keep running after you log out:
+#     sudo loginctl enable-linger $USER )
+# ─────────────────────────────────────────────────────────────────────────────
+[Unit]
+Description=cli-bridge, an OpenAI-compatible front-end for a local coding CLI
+After=network.target
+
+[Service]
+Type=simple
+# CHANGE-ME: absolute path to the folder containing bridge.py
+WorkingDirectory=%h/cli-bridge
+# Loads CLI_BRIDGE_* settings from your .env (same folder).
+EnvironmentFile=%h/cli-bridge/.env
+# CHANGE-ME: "python3" if it's on PATH, otherwise an absolute path to python3.
+ExecStart=python3 %h/cli-bridge/bridge.py
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target

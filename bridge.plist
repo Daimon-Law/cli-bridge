@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  launchd USER agent template for cli-bridge (optional, keeps it running in the
+  background and restarts it after a reboot or if it stops).
+
+  Setup (macOS):
+    1. Edit the three CHANGE-ME paths below. Find python3 with:  which python3
+    2. cp bridge.plist ~/Library/LaunchAgents/com.daimonlegal.cli-bridge.plist
+    3. launchctl load ~/Library/LaunchAgents/com.daimonlegal.cli-bridge.plist
+    4. launchctl list | grep cli-bridge          (check it is loaded)
+    5. curl http://127.0.0.1:18800/health         (check it is serving)
+
+  bridge.py reads its .env from its own folder, so no extra environment setup
+  is needed here.
+
+  To stop and remove it:
+    launchctl unload ~/Library/LaunchAgents/com.daimonlegal.cli-bridge.plist
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.daimonlegal.cli-bridge</string>
+  <key>ProgramArguments</key>
+  <array>
+    <!-- CHANGE-ME: absolute path to python3 (run: which python3) -->
+    <string>/usr/bin/python3</string>
+    <!-- CHANGE-ME: absolute path to bridge.py -->
+    <string>/Users/you/cli-bridge/bridge.py</string>
+  </array>
+  <!-- CHANGE-ME: absolute path to the folder containing bridge.py -->
+  <key>WorkingDirectory</key>
+  <string>/Users/you/cli-bridge</string>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/tmp/cli-bridge.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/cli-bridge.log</string>
+</dict>
+</plist>

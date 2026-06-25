@@ -1,0 +1,6 @@
+# Normalise every text file to LF, in the repository and in the working tree,
+# on every platform. This working tree is synced with Syncthing across Windows,
+# macOS, and Linux, so the bytes on disk must match everywhere. Mixed CRLF/LF
+# endings show up as phantom diffs and cause Syncthing conflicts; forcing LF
+# stops both. Git auto-detects binary files and leaves them untouched.
+* text=auto eol=lf

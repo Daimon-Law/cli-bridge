@@ -1,0 +1,2 @@
+# cli-bridge has exactly one third-party dependency.
+aiohttp>=3.9
